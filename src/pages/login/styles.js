@@ -22,7 +22,7 @@ const Container = styled.div`
 const LoginButton = styled(Button)`
 	width: 237px;
 	height: 56px;
-	font-size: 42px;
+	font-size: 36px;
 	margin-top: 150px;
 `;
 
