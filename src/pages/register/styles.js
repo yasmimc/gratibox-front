@@ -5,7 +5,7 @@ const RegisterButton = styled(Button)`
 	width: 237px;
 	height: 56px;
 	font-size: 36px;
-	margin-top: 70px;
+	margin-top: 60px;
 `;
 
 const LoginButton = styled(Button)`
