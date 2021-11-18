@@ -3,7 +3,7 @@ const routes = {
 	login: "/login",
 	register: "/cadastrar",
 	plans: "/planos",
-	signature: "/assinatura",
+	mySignature: "/minha-assinatura",
 	signPlan: "/assinar-plano",
 };
 
