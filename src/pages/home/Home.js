@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
 import routes from "../../routes/routes";
 import homeBackground from "../../assets/images/image05.webp";
-import {
-	Container,
-	TopSide,
-	BottomSide,
-	RegisterButton,
-	LoginButton,
-} from "./styles";
+import { Container, TopSide, BottomSide, LoginButton } from "./styles";
+import { Button as RegisterButton } from "../../components/Button";
 
 export default function Home() {
 	return (

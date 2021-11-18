@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button } from "../../components/Button";
 
 const Container = styled.div`
 	display: flex;
@@ -51,24 +52,10 @@ const BottomSide = styled.div`
 	width: 100%;
 	height: 50%;
 	background-color: #4d65a8;
-
-	button {
-		width: 202px;
-		height: 45px;
-		border-radius: 10px;
-		border: none;
-		color: white;
-		font-weight: 700;
-		font-size: 18px;
-	}
 `;
 
-const RegisterButton = styled.button`
-	background: #8c97ea;
-`;
-
-const LoginButton = styled.button`
+const LoginButton = styled(Button)`
 	background: transparent;
 `;
 
-export { Container, TopSide, BottomSide, RegisterButton, LoginButton };
+export { Container, TopSide, BottomSide, LoginButton };
