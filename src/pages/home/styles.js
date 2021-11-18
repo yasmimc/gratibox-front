@@ -1,15 +1,11 @@
 import styled from "styled-components";
 import { Button } from "../../components/Button";
 
-const Container = styled.div`
-	display: flex;
-	align-items: center;
-	img {
-		position: absolute;
-		left: 0;
-		z-index: 1;
-		width: 100%;
-	}
+const HomeImage = styled.img`
+	position: absolute;
+	left: 0;
+	z-index: 1;
+	width: 100%;
 `;
 
 const TopSide = styled.div`
@@ -58,4 +54,4 @@ const LoginButton = styled(Button)`
 	background: transparent;
 `;
 
-export { Container, TopSide, BottomSide, LoginButton };
+export { HomeImage, TopSide, BottomSide, LoginButton };
