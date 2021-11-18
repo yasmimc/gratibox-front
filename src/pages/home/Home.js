@@ -4,12 +4,13 @@ import homeBackground from "../../assets/images/image05.webp";
 import { PageContainer } from "../../components/PageContainer";
 import { HomeImage, TopSide, BottomSide, LoginButton } from "./styles";
 import { Button as RegisterButton } from "../../components/Button";
+import Welcome from "../../components/Welcome";
 
 export default function Home() {
 	return (
 		<PageContainer>
 			<TopSide>
-				<h1>Bem vinde ao GratiBox</h1>
+				<Welcome />
 				<h3>
 					Receba em casa um box com chás, produtos organicos, incensos e muito
 					mais...
