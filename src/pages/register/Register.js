@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { Button } from "../../components/Button";
+import { RegisterButton } from "./styles";
 import { Input } from "../../components/Input";
 import { PageContainer } from "../../components/PageContainer";
 
@@ -15,10 +14,3 @@ export default function Register() {
 		</PageContainer>
 	);
 }
-
-const RegisterButton = styled(Button)`
-	width: 237px;
-	height: 56px;
-	font-size: 36px;
-	margin-top: 100px;
-`;
