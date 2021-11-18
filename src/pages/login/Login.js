@@ -10,7 +10,7 @@ export default function Login() {
 			<h1>Bem vinde ao GratiBox</h1>
 			<Input type="email" placeholder="Email" />
 			<Input type="password" placeholder="Senha" />
-			<LoginButton children="Login" />
+			<LoginButton type="submit" children="Login" />
 			<Link to={routes.register}>
 				<RegisterButton children="Ainda não sou grato" />
 			</Link>
