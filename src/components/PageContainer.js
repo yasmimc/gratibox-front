@@ -6,6 +6,7 @@ export const PageContainer = styled.div`
 	width: 100vw;
 	height: 100vh;
 	align-items: center;
+	justify-content: center;
 	background-color: #6d7ce4;
 
 	padding: 100px 25px;
@@ -14,6 +15,12 @@ export const PageContainer = styled.div`
 		font-weight: 500;
 		font-size: 28px;
 		color: white;
-		margin-bottom: 40px;
+		margin-top: 50px;
+	}
+
+	h3 {
+		margin-top: 40px;
+		font-weight: 300;
+		font-size: 18px;
 	}
 `;

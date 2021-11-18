@@ -20,18 +20,6 @@ const TopSide = styled.div`
 	width: 100%;
 	height: 50%;
 	background-color: #6d7ce4;
-
-	h1 {
-		font-weight: 700;
-		font-size: 28px;
-		margin-top: 50px;
-	}
-
-	h3 {
-		margin-top: 40px;
-		font-weight: 300;
-		font-size: 18px;
-	}
 `;
 
 const BottomSide = styled.div`
