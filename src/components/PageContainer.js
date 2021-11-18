@@ -22,5 +22,6 @@ export const PageContainer = styled.div`
 		margin-top: 40px;
 		font-weight: 300;
 		font-size: 18px;
+		color: white;
 	}
 `;
