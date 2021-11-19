@@ -1,5 +1,6 @@
+const badRequest = 400;
 const unauthorized = 401;
-const badRequest = 404;
+const notFound = 404;
 const conflict = 409;
 
-export { unauthorized, badRequest, conflict };
+export { unauthorized, notFound, badRequest, conflict };
