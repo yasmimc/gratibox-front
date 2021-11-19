@@ -152,10 +152,13 @@ export default function Register() {
                 />
                 {inputError.confirmPassword ? (
                     <InputErrorMsg>
-                        {" "}
                         <p>As senhas não coincidem.</p>
                         <p> Por favor, digite novamente 🙏</p>{" "}
                     </InputErrorMsg>
+                ) : null}
+
+                {inputError.emptyFields ? (
+                    <InputErrorMsg children="Por favor, preencha todos os campos 🙏" />
                 ) : null}
                 <RegisterButton
                     disabled={loading}
