@@ -6,7 +6,6 @@ import routes from "../routes/routes";
 import Login from "../pages/login/Login";
 import Register from "../pages/register/Register";
 import Home from "../pages/home/Home";
-import SignPlan from "../pages/signPlan/SignPlan";
 import MySignature from "../pages/mySigntature/MySignature";
 import Plans from "../pages/plans/Plans";
 
@@ -19,7 +18,6 @@ function App() {
 				<Route exact path={routes.register} element={<Register />} />
 				<Route exact path={routes.plans} element={<Plans />} />
 				<Route exact path={routes.mySignature} element={<MySignature />} />
-				<Route exact path={routes.signPlan} element={<SignPlan />} />
 			</Routes>
 		</BrowserRouter>
 	);

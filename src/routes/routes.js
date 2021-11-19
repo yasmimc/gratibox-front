@@ -4,7 +4,6 @@ const routes = {
 	register: "/cadastrar",
 	plans: "/planos",
 	mySignature: "/minha-assinatura",
-	signPlan: "/assinar-plano",
 };
 
 export default routes;

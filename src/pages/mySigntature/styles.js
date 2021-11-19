@@ -27,7 +27,7 @@ const MySignatureDetails = styled.div`
 
 	img {
 		width: 100%;
-		height: 50%;
+		height: 40%;
 		object-fit: cover;
 		border-radius: 10px;
 	}
@@ -74,4 +74,55 @@ const Products = styled.div`
 	}
 `;
 
-export { PageContainer, MySignatureDetails, RateButton, Deliveries, Products };
+const SignPlan = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	select,
+	div {
+		border: none;
+		padding: 12px;
+
+		color: #4d65a8;
+
+		width: 290px;
+		font-weight: 700;
+		font-size: 18px;
+
+		background: rgba(224, 209, 237, 0.62);
+		border-radius: 5px;
+
+		margin-top: 5px;
+	}
+`;
+
+const SignProducts = styled.div`
+	p {
+		padding: 0;
+		color: #4d65a8;
+		font-weight: 700;
+		font-size: 18px;
+		margin-bottom: 15px;
+	}
+	label {
+		margin-right: 40px;
+	}
+	input[type="checkbox"] {
+		width: 20px;
+		height: 20px;
+		border: 0;
+	}
+	input[type="checkbox"]:after {
+	}
+`;
+
+export {
+	PageContainer,
+	MySignatureDetails,
+	RateButton,
+	Deliveries,
+	Products,
+	SignPlan,
+	SignProducts,
+};
