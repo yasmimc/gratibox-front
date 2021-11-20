@@ -8,19 +8,30 @@ import Register from "../pages/register/Register";
 import Home from "../pages/home/Home";
 import MySignature from "../pages/mySigntature/MySignature";
 import Plans from "../pages/plans/Plans";
+import { UserProvider } from "../contexts/userContext";
 
 function App() {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route exact path={routes.home} element={<Home />} />
-				<Route exact path={routes.login} element={<Login />} />
-				<Route exact path={routes.register} element={<Register />} />
-				<Route exact path={routes.plans} element={<Plans />} />
-				<Route exact path={routes.mySignature} element={<MySignature />} />
-			</Routes>
-		</BrowserRouter>
-	);
+    return (
+        <BrowserRouter>
+            <UserProvider>
+                <Routes>
+                    <Route exact path={routes.home} element={<Home />} />
+                    <Route exact path={routes.login} element={<Login />} />
+                    <Route
+                        exact
+                        path={routes.register}
+                        element={<Register />}
+                    />
+                    <Route exact path={routes.plans} element={<Plans />} />
+                    <Route
+                        exact
+                        path={routes.mySignature}
+                        element={<MySignature />}
+                    />
+                </Routes>
+            </UserProvider>
+        </BrowserRouter>
+    );
 }
 
 export default App;

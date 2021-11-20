@@ -4,11 +4,12 @@ import { LoginButton, RegisterButton } from "./styles";
 import { Input } from "../../components/Input";
 import routes from "../../routes/routes";
 import Welcome from "../../components/Welcome";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import API from "../../services/API/requests";
 import { Form } from "../../components/Form";
 import { emailRegex } from "../register/regexValidations";
 import InputErrorMsg from "../../components/InputErrorMsg";
+import UserContext from "../../contexts/userContext";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -26,6 +27,8 @@ export default function Login() {
 
     const [loading, setLoading] = useState(false);
 
+    const { saveUser } = useContext(UserContext);
+
     function submitSignIn(event) {
         event.preventDefault();
         setLoading(true);
@@ -42,7 +45,8 @@ export default function Login() {
         );
         if (!inputErrors) {
             API.signIn(input)
-                .then(() => {
+                .then((resp) => {
+                    saveUser(resp.data);
                     setLoading(false);
                     navigate(routes.plans);
                 })
