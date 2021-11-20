@@ -4,7 +4,7 @@ import { LoginButton, RegisterButton } from "./styles";
 import { Input } from "../../components/Input";
 import routes from "../../routes/routes";
 import Welcome from "../../components/Welcome";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import API from "../../services/API/requests";
 import { Form } from "../../components/Form";
 import { emailRegex } from "../register/regexValidations";
@@ -13,6 +13,17 @@ import UserContext from "../../contexts/userContext";
 
 export default function Login() {
     const navigate = useNavigate();
+
+    const { validateToken, userData } = useContext(UserContext);
+
+    useEffect(() => {
+        (async function () {
+            const authenticate = await validateToken();
+            if (authenticate) {
+                navigate(routes.plans);
+            }
+        })();
+    }, [userData]);
 
     const [input, setInput] = useState({
         email: "",
@@ -27,7 +38,7 @@ export default function Login() {
 
     const [loading, setLoading] = useState(false);
 
-    const { saveUser } = useContext(UserContext);
+    const { persistLogin } = useContext(UserContext);
 
     function submitSignIn(event) {
         event.preventDefault();
@@ -46,7 +57,7 @@ export default function Login() {
         if (!inputErrors) {
             API.signIn(input)
                 .then((resp) => {
-                    saveUser(resp.data);
+                    persistLogin(resp.data);
                     setLoading(false);
                     navigate(routes.plans);
                 })

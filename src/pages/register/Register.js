@@ -5,14 +5,26 @@ import { PageContainer } from "../../components/PageContainer";
 import { Link, useNavigate } from "react-router-dom";
 import routes from "../../routes/routes";
 import Welcome from "../../components/Welcome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "../../components/Form";
 import API from "../../services/API/requests";
 import { emailRegex, strongPasswordRegex } from "./regexValidations";
 import { conflict } from "../../services/API/statusCode";
+import { useContext } from "react";
+import UserContext from "../../contexts/userContext";
 
 export default function Register() {
+    const { validateToken, userData } = useContext(UserContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        (async function () {
+            const authenticate = await validateToken();
+            if (authenticate) {
+                navigate(routes.plans);
+            }
+        })();
+    }, [userData]);
 
     const [input, setInput] = useState({
         name: "",

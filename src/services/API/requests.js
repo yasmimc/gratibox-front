@@ -3,8 +3,16 @@ import axiosBase from "./axiosBase";
 const API = {
     signUp,
     signIn,
-    // validateToken,
+    validateToken,
 };
+
+function createBearerTokenAuthorization(token) {
+    return {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+}
 
 function signUp({ name, email, password }) {
     return axiosBase.post("/sign-up", {
@@ -19,6 +27,10 @@ function signIn({ email, password }) {
         email,
         password,
     });
+}
+
+function validateToken(token) {
+    return axiosBase.get("/auth", createBearerTokenAuthorization(token));
 }
 
 export default API;
