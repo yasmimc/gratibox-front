@@ -4,6 +4,7 @@ const API = {
     signUp,
     signIn,
     validateToken,
+    getPlans,
 };
 
 function createBearerTokenAuthorization(token) {
@@ -31,6 +32,10 @@ function signIn({ email, password }) {
 
 function validateToken(token) {
     return axiosBase.get("/auth", createBearerTokenAuthorization(token));
+}
+
+function getPlans(token) {
+    return axiosBase.get("/plans", createBearerTokenAuthorization(token));
 }
 
 export default API;

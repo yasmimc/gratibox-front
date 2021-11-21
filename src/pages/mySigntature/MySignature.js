@@ -89,6 +89,7 @@ export default function MySignature() {
                 {activeSignature ? <SignatureDetails /> : null}
                 {!activeSignature && !next ? (
                     <FirstStepSignPlan
+                        userData={userData}
                         setSignatureInfo={setSignatureInfo}
                         signatureInfo={signatureInfo}
                         setSignatureInputError={setSignatureInputError}
@@ -97,6 +98,7 @@ export default function MySignature() {
                     />
                 ) : (
                     <SecondStepSignPlan
+                        userData={userData}
                         setAddressInfo={setAddressInfo}
                         addressInfo={addressInfo}
                         setSignatureInputError={setSignatureInputError}
