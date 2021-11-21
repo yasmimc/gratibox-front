@@ -24,7 +24,6 @@ export function UserProvider({ children }) {
         if (localSavedUser) {
             try {
                 const auth = await API.validateToken(localSavedUser.token);
-                console.log({ auth });
                 if (auth.status === 200) return true;
             } catch (error) {
                 console.error("Fail to authenticate user");

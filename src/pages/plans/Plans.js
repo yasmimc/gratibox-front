@@ -34,7 +34,10 @@ export default function Plans() {
                     Você recebe um box por semana. Ideal para quem quer exercer
                     a gratidão todos os dias.
                 </h3>
-                <Button children="Assinar" />
+                <Button
+                    children="Assinar"
+                    onClick={() => navigate(routes.mySignature)}
+                />
             </SignPlan>
         </PageContainer>
     );
