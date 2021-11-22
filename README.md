@@ -28,4 +28,4 @@ You will also see any lint errors in the console.
 
 ### Deployment
 
-This api is deployed on Versel, you can visit it by accessing the url https://gratibox-orpin.vercel.app/.
+This application is deployed on Versel and there it uses the backend API that is deployed on Heroku, you can visit it without having to run any application locally by going to the url https://gratibox-orpin.vercel.app/.
