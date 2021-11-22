@@ -3,7 +3,6 @@ import { Deliveries, Products } from "./styles";
 
 export default function SignatureDetails({ userPlan, planType }) {
     function businessDay(date) {
-        console.log(date);
         if (dayjs(date).day() === 6)
             return dayjs(dayjs(date).add(2, "days").format());
 
