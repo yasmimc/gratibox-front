@@ -14,7 +14,7 @@ export default function SecondStepSignPlan({
                 onChange={(event) => {
                     setAddressInfo({
                         ...addressInfo,
-                        completeName: event.target.value,
+                        userFullName: event.target.value,
                     });
                     setSignatureInputError(false);
                 }}
@@ -36,7 +36,7 @@ export default function SecondStepSignPlan({
                 onChange={(event) => {
                     setAddressInfo({
                         ...addressInfo,
-                        cep: event.target.value,
+                        cep: event.target.value.replace("-", ""),
                     });
                     setSignatureInputError(false);
                 }}

@@ -34,14 +34,12 @@ export default function FirstStepSignPlan({
         if (userData.token) {
             API.getPlans(userData.token)
                 .then((resp) => setPlans(resp.data))
-                .catch((error) => {
-                    console.log(error.response);
+                .catch(() => {
                     console.error("Fail to load plans");
                 });
             API.getProducts(userData.token)
                 .then((resp) => setProducts(resp.data))
-                .catch((error) => {
-                    console.log(error.response);
+                .catch(() => {
                     console.error("Fail to load plans");
                 });
         }
@@ -65,12 +63,12 @@ export default function FirstStepSignPlan({
                 </option>
                 {plans.length > 0 ? (
                     plans.map((plan) => (
-                        <option key={plan.id} value={plan.name}>
+                        <option key={plan.id} value={plan.id}>
                             {plan.name}
                         </option>
                     ))
                 ) : (
-                    <option value="" disabled>
+                    <option key="0" value="" disabled>
                         Nenhum plano encontrado
                     </option>
                 )}
@@ -104,7 +102,9 @@ export default function FirstStepSignPlan({
                                       updateProducts(event);
                                   }}
                               />
-                              <label>{product.name}</label>
+                              <label key={`${product.id} label`}>
+                                  {product.name}
+                              </label>
                           </>
                       ))
                     : null}

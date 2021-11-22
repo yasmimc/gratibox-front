@@ -14,6 +14,7 @@ import routes from "../../routes/routes";
 import SignatureDetails from "./SignatureDetails";
 import FirstStepSignPlan from "./FirstStepSignPlan";
 import SecondStepSignPlan from "./SecondStepSignPlan";
+import API from "../../services/API/requests";
 
 export default function MySignature() {
     const navigate = useNavigate();
@@ -32,20 +33,23 @@ export default function MySignature() {
     const [activeSignature, setActiveSignature] = useState(false);
     const [signatureInfo, setSignatureInfo] = useState({
         plan: "",
-        date: "",
+        startDate: "",
         products: [],
     });
-    const [products, setProducts] = useState([]);
 
     function updateProducts(event) {
         if (event.target.checked) {
-            setProducts([...products, event.target.value]);
+            setSignatureInfo({
+                ...signatureInfo,
+                products: [...signatureInfo.products, event.target.value],
+            });
         } else
-            setProducts(
-                products.filter((product) => product !== event.target.value)
-            );
-
-        setSignatureInfo({ ...signatureInfo, products });
+            setSignatureInfo({
+                ...signatureInfo,
+                products: signatureInfo.products.filter(
+                    (product) => product !== event.target.value
+                ),
+            });
     }
 
     const [next, setNext] = useState(false);
@@ -61,7 +65,7 @@ export default function MySignature() {
     }
 
     const [addressInfo, setAddressInfo] = useState({
-        completeName: "",
+        userFullName: "",
         deliveryAddress: "",
         cep: "",
         city: "",
@@ -73,8 +77,18 @@ export default function MySignature() {
             (key) => key === ""
         );
         if (emptyFields) setSignatureInputError(true);
-        // else
-        // finalizar assinatura
+        else {
+            API.signPlan(
+                {
+                    userId: userData.user.id,
+                    ...signatureInfo,
+                    ...addressInfo,
+                },
+                userData.token
+            )
+                .then(() => setActiveSignature(true))
+                .catch(() => console.error("Fail to sign plan"));
+        }
     }
 
     return (
@@ -96,7 +110,8 @@ export default function MySignature() {
                         updateProducts={updateProducts}
                         signatureInputError={signatureInputError}
                     />
-                ) : (
+                ) : null}
+                {!activeSignature && next ? (
                     <SecondStepSignPlan
                         userData={userData}
                         setAddressInfo={setAddressInfo}
@@ -104,7 +119,7 @@ export default function MySignature() {
                         setSignatureInputError={setSignatureInputError}
                         signatureInputError={signatureInputError}
                     />
-                )}
+                ) : null}
             </MySignatureDetails>
             {activeSignature ? (
                 <RateButton children="Avaliar entregas" />
@@ -115,13 +130,14 @@ export default function MySignature() {
                     children="Próximo"
                     onClick={nextPage}
                 />
-            ) : (
+            ) : null}
+            {!activeSignature && next ? (
                 <NextPageButton
                     type="submit"
                     children="Finalizar"
                     onClick={signPlan}
                 />
-            )}
+            ) : null}
         </PageContainer>
     );
 }
