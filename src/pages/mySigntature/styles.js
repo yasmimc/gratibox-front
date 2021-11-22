@@ -68,7 +68,6 @@ const Deliveries = styled.div`
 const Products = styled.div`
     display: flex;
     width: 100%;
-    justify-content: space-between;
 
     p {
         font-size: 17px;
