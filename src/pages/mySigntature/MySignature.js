@@ -46,10 +46,11 @@ export default function MySignature() {
                 })
                 .catch(() => {
                     setLoading(false);
+                    setUserPlan({});
                     console.error("Fail to get user plan");
                 });
         }
-    }, [userData, activeSignature, userPlan]);
+    }, [userData, activeSignature]);
 
     const [signatureInfo, setSignatureInfo] = useState({
         plan: "",
