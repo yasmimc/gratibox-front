@@ -6,4 +6,8 @@ function setLocalStorage(value) {
     localStorage.setItem("gratiboxUser", JSON.stringify(value));
 }
 
-export { getUserFromLocalStorage, setLocalStorage };
+function clearLocalStorage() {
+    localStorage.removeItem("gratiboxUser");
+}
+
+export { getUserFromLocalStorage, setLocalStorage, clearLocalStorage };

@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import {
+    clearLocalStorage,
     getUserFromLocalStorage,
     setLocalStorage,
 } from "../helpers/localStorage";
@@ -15,7 +16,7 @@ export function UserProvider({ children }) {
     const localSavedUser = getUserFromLocalStorage();
 
     useEffect(() => {
-        if (!userData.user && localSavedUser) setUserData(localSavedUser);
+        if (!userData?.user && localSavedUser) setUserData(localSavedUser);
     }, [userData]);
 
     function persistLogin(userObj) {
@@ -34,6 +35,11 @@ export function UserProvider({ children }) {
         } else return false;
     }
 
+    function logOut() {
+        clearLocalStorage();
+        setUserData(null);
+    }
+
     return (
         <UserContext.Provider
             value={{
@@ -44,6 +50,7 @@ export function UserProvider({ children }) {
                 setActiveSignature,
                 userPlan,
                 setUserPlan,
+                logOut,
             }}
         >
             {children}
