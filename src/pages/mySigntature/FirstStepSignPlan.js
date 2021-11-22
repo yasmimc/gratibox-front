@@ -15,6 +15,7 @@ export default function FirstStepSignPlan({
 }) {
     const [type, setType] = useState("text");
     const [plans, setPlans] = useState([]);
+    const [products, setProducts] = useState([]);
 
     const navigate = useNavigate();
 
@@ -30,10 +31,20 @@ export default function FirstStepSignPlan({
     }, [userData]);
 
     useEffect(() => {
-        if (userData.token)
+        if (userData.token) {
             API.getPlans(userData.token)
                 .then((resp) => setPlans(resp.data))
-                .catch(() => console.error("Fail to load plans"));
+                .catch((error) => {
+                    console.log(error.response);
+                    console.error("Fail to load plans");
+                });
+            API.getProducts(userData.token)
+                .then((resp) => setProducts(resp.data))
+                .catch((error) => {
+                    console.log(error.response);
+                    console.error("Fail to load plans");
+                });
+        }
     }, [userData]);
 
     return (
@@ -54,7 +65,9 @@ export default function FirstStepSignPlan({
                 </option>
                 {plans.length > 0 ? (
                     plans.map((plan) => (
-                        <option value={plan.name}>{plan.name}</option>
+                        <option key={plan.id} value={plan.name}>
+                            {plan.name}
+                        </option>
                     ))
                 ) : (
                     <option value="" disabled>
@@ -73,39 +86,28 @@ export default function FirstStepSignPlan({
                     setSignatureInputError(false);
                     setSignatureInfo({
                         ...signatureInfo,
-                        date: event.target.value,
+                        startDate: event.target.value,
                     });
                 }}
             />
             <SignProducts>
                 <p>Quero receber</p>
-                <input
-                    type="checkbox"
-                    value="Chás"
-                    onChange={(event) => {
-                        setSignatureInputError(false);
-                        updateProducts(event);
-                    }}
-                />
-                <label>Chás</label>
-                <input
-                    type="checkbox"
-                    value="Incensos"
-                    onChange={(event) => {
-                        setSignatureInputError(false);
-                        updateProducts(event);
-                    }}
-                />
-                <label>Incensos</label>
-                <input
-                    type="checkbox"
-                    value="Produtos organicos"
-                    onChange={(event) => {
-                        setSignatureInputError(false);
-                        updateProducts(event);
-                    }}
-                />
-                <label>Produtos organicos</label>
+                {products.length > 0
+                    ? products.map((product) => (
+                          <>
+                              <input
+                                  key={product.id}
+                                  type="checkbox"
+                                  value={product.id}
+                                  onChange={(event) => {
+                                      setSignatureInputError(false);
+                                      updateProducts(event);
+                                  }}
+                              />
+                              <label>{product.name}</label>
+                          </>
+                      ))
+                    : null}
             </SignProducts>
             {signatureInputError ? <p>Selecione todos os campos</p> : null}
         </SignPlan>
