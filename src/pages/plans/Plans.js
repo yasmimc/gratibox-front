@@ -2,15 +2,24 @@ import plansBackgroundImg from "../../assets/images/image04.jpg";
 import { SignPlan, PageContainer } from "./styles";
 import { Button } from "../../components/Button";
 import Greetings from "../../components/Greetings";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useContext } from "react";
 import UserContext from "../../contexts/userContext";
 import { useNavigate } from "react-router";
 import routes from "../../routes/routes";
+import API from "../../services/API/requests";
 
 export default function Plans() {
-    const { validateToken, userData } = useContext(UserContext);
+    const {
+        validateToken,
+        userData,
+        activeSignature,
+        setActiveSignature,
+        setUserPlan,
+    } = useContext(UserContext);
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!userData.user) {
@@ -18,8 +27,21 @@ export default function Plans() {
                 const authenticate = await validateToken();
                 if (!authenticate) navigate(routes.login);
             })();
+        } else {
+            setLoading(true);
+            API.getUserPlan(userData.token)
+                .then((resp) => {
+                    setActiveSignature(true);
+                    setUserPlan(resp.data);
+                    setLoading(false);
+                    navigate(routes.mySignature);
+                })
+                .catch(() => {
+                    setLoading(false);
+                    console.error("Fail to get user plan");
+                });
         }
-    }, [userData]);
+    }, [userData, activeSignature]);
 
     return (
         <PageContainer>
@@ -35,6 +57,7 @@ export default function Plans() {
                     a gratidão todos os dias.
                 </h3>
                 <Button
+                    disabled={loading}
                     children="Assinar"
                     onClick={() => navigate(routes.mySignature)}
                 />

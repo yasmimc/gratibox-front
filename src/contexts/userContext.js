@@ -9,6 +9,9 @@ const UserContext = createContext({});
 
 export function UserProvider({ children }) {
     const [userData, setUserData] = useState({});
+    const [activeSignature, setActiveSignature] = useState(false);
+    const [userPlan, setUserPlan] = useState({});
+
     const localSavedUser = getUserFromLocalStorage();
 
     useEffect(() => {
@@ -37,6 +40,10 @@ export function UserProvider({ children }) {
                 userData,
                 persistLogin,
                 validateToken,
+                activeSignature,
+                setActiveSignature,
+                userPlan,
+                setUserPlan,
             }}
         >
             {children}

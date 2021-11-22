@@ -19,10 +19,15 @@ import API from "../../services/API/requests";
 export default function MySignature() {
     const navigate = useNavigate();
 
-    const { validateToken, userData } = useContext(UserContext);
+    const {
+        validateToken,
+        userData,
+        activeSignature,
+        setActiveSignature,
+        userPlan,
+        setUserPlan,
+    } = useContext(UserContext);
 
-    const [userPlan, setUserPlan] = useState({});
-    const [activeSignature, setActiveSignature] = useState(false);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -31,13 +36,13 @@ export default function MySignature() {
                 const authenticate = await validateToken();
                 if (!authenticate) navigate(routes.login);
             })();
-        } else {
+        } else if (!activeSignature) {
             setLoading(true);
             API.getUserPlan(userData.token)
                 .then((resp) => {
+                    setUserPlan(resp.data);
                     setActiveSignature(true);
                     setLoading(false);
-                    setUserPlan(resp.data);
                 })
                 .catch(() => {
                     setLoading(false);
