@@ -7,6 +7,7 @@ const API = {
     getPlans,
     getProducts,
     signPlan,
+    getUserPlan,
 };
 
 function createBearerTokenAuthorization(token) {
@@ -50,6 +51,10 @@ function signPlan(plan, token) {
         plan,
         createBearerTokenAuthorization(token)
     );
+}
+
+function getUserPlan(token) {
+    return axiosBase.get("/signature", createBearerTokenAuthorization(token));
 }
 
 export default API;

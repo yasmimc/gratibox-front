@@ -21,16 +21,31 @@ export default function MySignature() {
 
     const { validateToken, userData } = useContext(UserContext);
 
+    const [userPlan, setUserPlan] = useState({});
+    const [activeSignature, setActiveSignature] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         if (!userData.user) {
             (async function () {
                 const authenticate = await validateToken();
                 if (!authenticate) navigate(routes.login);
             })();
+        } else {
+            setLoading(true);
+            API.getUserPlan(userData.token)
+                .then((resp) => {
+                    setActiveSignature(true);
+                    setLoading(false);
+                    setUserPlan(resp.data);
+                })
+                .catch(() => {
+                    setLoading(false);
+                    console.error("Fail to get user plan");
+                });
         }
-    }, [userData]);
+    }, [userData, activeSignature]);
 
-    const [activeSignature, setActiveSignature] = useState(false);
     const [signatureInfo, setSignatureInfo] = useState({
         plan: "",
         startDate: "",
@@ -100,7 +115,9 @@ export default function MySignature() {
                     src={mySignatureBackGroundImg}
                     alt="mySignatureBackgroundImg"
                 />
-                {activeSignature ? <SignatureDetails /> : null}
+                {activeSignature && !loading ? (
+                    <SignatureDetails userPlan={userPlan} />
+                ) : null}
                 {!activeSignature && !next ? (
                     <FirstStepSignPlan
                         userData={userData}

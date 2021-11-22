@@ -1,28 +1,37 @@
+import dayjs from "dayjs";
 import { Deliveries, Products } from "./styles";
 
-export default function SignatureDetails() {
+export default function SignatureDetails({ userPlan }) {
     return (
         <>
             <Deliveries>
                 <p>
                     <span className="label">Plano: </span>
-                    @tipo_de_plano
+                    {userPlan.planName}
                 </p>
                 <p>
-                    <span className="label">Data de assinatura:</span>
-                    dd/mm/aa
+                    <span className="label">Data de assinatura: </span>
+                    {dayjs(userPlan.date).format("DD/MM/YYYY")}
                 </p>
                 <p>
                     <span className="label">Próximas entregas:</span>
-                    <li>dd/mm/aa</li>
-                    <li>dd/mm/aa</li>
-                    <li>dd/mm/aa</li>
+                    <li>{dayjs(userPlan.startDate).format("DD/MM/YYYY")}</li>
+                    <li>
+                        {dayjs(userPlan.startDate)
+                            .add(userPlan.planPeriod, "days")
+                            .format("DD/MM/YYYY")}
+                    </li>
+                    <li>
+                        {dayjs(userPlan.startDate)
+                            .add(userPlan.planPeriod * 2, "days")
+                            .format("DD/MM/YYYY")}
+                    </li>
                 </p>
             </Deliveries>
             <Products>
-                <p>Chás</p>
-                <p>Produtos organicos</p>
-                <p>Incensos</p>
+                {userPlan.products.map((product, index) => (
+                    <p key={index}>{product}</p>
+                ))}
             </Products>
         </>
     );
