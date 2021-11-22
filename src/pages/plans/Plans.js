@@ -22,7 +22,7 @@ export default function Plans() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (!userData.user) {
+        if (!userData?.user) {
             (async function () {
                 const authenticate = await validateToken();
                 if (!authenticate) navigate(routes.login);
