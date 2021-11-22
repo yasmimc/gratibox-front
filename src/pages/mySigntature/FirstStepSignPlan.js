@@ -14,13 +14,12 @@ export default function FirstStepSignPlan({
     updateProducts,
     signatureInputError,
 }) {
-    const [type, setType] = useState("text");
     const [plans, setPlans] = useState([]);
     const [products, setProducts] = useState([]);
 
     const navigate = useNavigate();
 
-    const { validateToken } = useContext(UserContext);
+    const { validateToken, planType, setPlanType } = useContext(UserContext);
 
     useEffect(() => {
         if (!userData?.user) {
@@ -56,6 +55,11 @@ export default function FirstStepSignPlan({
                         ...signatureInfo,
                         plan: event.target.value,
                     });
+                    setPlanType(
+                        event.target.options[
+                            event.target.options.selectedIndex
+                        ].getAttribute("name")
+                    );
                     setSignatureInputError(false);
                 }}
             >
@@ -64,7 +68,7 @@ export default function FirstStepSignPlan({
                 </option>
                 {plans.length > 0 ? (
                     plans.map((plan) => (
-                        <option key={plan.id} value={plan.id}>
+                        <option key={plan.id} value={plan.id} name={plan.name}>
                             {plan.name}
                         </option>
                     ))
@@ -74,22 +78,112 @@ export default function FirstStepSignPlan({
                     </option>
                 )}
             </select>
-            <input
-                type={type}
-                min={dayjs().format("YYYY-MM-DD")}
-                placeholder="Entrega"
-                onFocus={() => setType("date")}
-                onBlur={() => {
-                    if (!signatureInfo.date) setType("text");
-                }}
+            <select
+                name="deliveryDate"
+                id="deliveryDate"
                 onChange={(event) => {
-                    setSignatureInputError(false);
                     setSignatureInfo({
                         ...signatureInfo,
                         startDate: event.target.value,
                     });
+                    setSignatureInputError(false);
                 }}
-            />
+            >
+                <option value="" disabled selected>
+                    Entrega
+                </option>
+                {!signatureInfo.plan ? (
+                    <option key="0" value="" disabled>
+                        Escolha um plano primeiro
+                    </option>
+                ) : null}
+                {planType === "Mensal" ? (
+                    <>
+                        <option
+                            key="0"
+                            value={
+                                dayjs().date() > 1
+                                    ? dayjs()
+                                          .set("date", 1)
+                                          .set("month", dayjs().month() + 1)
+                                          .format()
+                                    : dayjs().set("date", 1).format()
+                            }
+                        >
+                            Dia 01
+                        </option>
+                        <option
+                            key="1"
+                            value={
+                                dayjs().date() > 10
+                                    ? dayjs()
+                                          .set("date", 10)
+                                          .set("month", dayjs().month() + 1)
+                                          .format()
+                                    : dayjs().set("date", 10).format()
+                            }
+                        >
+                            Dia 10
+                        </option>
+                        <option
+                            key="2"
+                            value={
+                                dayjs().date() > 20
+                                    ? dayjs()
+                                          .set("date", 20)
+                                          .set("month", dayjs().month() + 1)
+                                          .format()
+                                    : dayjs().set("date", 20).format()
+                            }
+                        >
+                            Dia 20
+                        </option>
+                    </>
+                ) : null}
+                {planType === "Semanal" ? (
+                    <>
+                        <option
+                            key="0"
+                            value={
+                                dayjs().day() > 1
+                                    ? dayjs()
+                                          .set("day", 1)
+                                          .add("date", 7)
+                                          .format()
+                                    : dayjs().set("day", 1).format()
+                            }
+                        >
+                            Segunda
+                        </option>
+                        <option
+                            key="1"
+                            value={
+                                dayjs().day() > 3
+                                    ? dayjs()
+                                          .set("day", 3)
+                                          .add("date", 7)
+                                          .format()
+                                    : dayjs().set("day", 3).format()
+                            }
+                        >
+                            Quarta
+                        </option>
+                        <option
+                            key="2"
+                            value={
+                                dayjs().day() > 5
+                                    ? dayjs()
+                                          .set("day", 5)
+                                          .add("date", 7)
+                                          .format()
+                                    : dayjs().set("day", 5).format()
+                            }
+                        >
+                            Sexta
+                        </option>
+                    </>
+                ) : null}
+            </select>
             <SignProducts>
                 <p>Quero receber</p>
                 {products.length > 0

@@ -1,8 +1,9 @@
 import dayjs from "dayjs";
 import { Deliveries, Products } from "./styles";
 
-export default function SignatureDetails({ userPlan }) {
+export default function SignatureDetails({ userPlan, planType }) {
     function businessDay(date) {
+        console.log(date);
         if (dayjs(date).day() === 6)
             return dayjs(dayjs(date).add(2, "days").format());
 
@@ -12,6 +13,11 @@ export default function SignatureDetails({ userPlan }) {
         return dayjs(date).format();
     }
 
+    function weekday(number) {
+        if (number === 1) return "Segunda";
+        if (number === 3) return "Quarta";
+        if (number === 5) return "Sexta";
+    }
     return (
         <>
             <Deliveries>
@@ -21,29 +27,70 @@ export default function SignatureDetails({ userPlan }) {
                 </p>
                 <p>
                     <span className="label">Data de assinatura: </span>
-                    {dayjs(businessDay(userPlan?.date)).format("DD/MM/YYYY")}
+                    {dayjs(userPlan?.date).format("DD/MM/YYYY")}
+                </p>
+                <p>
+                    <span className="label">Dia recorrente: </span>
+                    {planType === "Mensal"
+                        ? `Dia ${dayjs(userPlan?.startDate).date()}`
+                        : weekday(dayjs(userPlan?.startDate).day())}
                 </p>
                 <p>
                     <span className="label">Próximas entregas:</span>
                     <li>{dayjs(userPlan?.startDate).format("DD/MM/YYYY")}</li>
-                    <li>
-                        {dayjs(
-                            businessDay(
-                                dayjs(userPlan?.startDate)
-                                    .add(userPlan?.planPeriod, "days")
-                                    .format()
-                            )
-                        ).format("DD/MM/YYYY")}
-                    </li>
-                    <li>
-                        {dayjs(
-                            businessDay(
-                                dayjs(userPlan?.startDate)
-                                    .add(userPlan?.planPeriod * 2, "days")
-                                    .format()
-                            )
-                        ).format("DD/MM/YYYY")}
-                    </li>
+                    {planType === "Mensal" ? (
+                        <>
+                            <li>
+                                {dayjs(
+                                    businessDay(
+                                        dayjs(userPlan?.startDate)
+                                            .set(
+                                                "month",
+                                                dayjs(
+                                                    userPlan?.startDate
+                                                ).month() + 1
+                                            )
+                                            .format()
+                                    )
+                                ).format("DD/MM/YYYY")}
+                            </li>
+                            <li>
+                                {dayjs(
+                                    businessDay(
+                                        dayjs(userPlan?.startDate)
+                                            .set(
+                                                "month",
+                                                dayjs(
+                                                    userPlan?.startDate
+                                                ).month() + 2
+                                            )
+                                            .format()
+                                    )
+                                ).format("DD/MM/YYYY")}
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li>
+                                {dayjs(
+                                    businessDay(
+                                        dayjs(userPlan?.startDate)
+                                            .add(7, "days")
+                                            .format()
+                                    )
+                                ).format("DD/MM/YYYY")}
+                            </li>
+                            <li>
+                                {dayjs(
+                                    businessDay(
+                                        dayjs(userPlan?.startDate)
+                                            .add(14, "days")
+                                            .format()
+                                    )
+                                ).format("DD/MM/YYYY")}
+                            </li>
+                        </>
+                    )}
                 </p>
             </Deliveries>
             <Products>

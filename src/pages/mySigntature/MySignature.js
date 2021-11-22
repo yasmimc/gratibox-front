@@ -26,6 +26,8 @@ export default function MySignature() {
         setActiveSignature,
         userPlan,
         setUserPlan,
+        planType,
+        setPlanType,
     } = useContext(UserContext);
 
     const [loading, setLoading] = useState(false);
@@ -41,16 +43,16 @@ export default function MySignature() {
             API.getUserPlan(userData.token)
                 .then((resp) => {
                     setUserPlan(resp.data);
+                    setPlanType(resp.data.planName);
                     setActiveSignature(true);
                     setLoading(false);
                 })
                 .catch(() => {
                     setLoading(false);
-                    setUserPlan({});
                     console.error("Fail to get user plan");
                 });
         }
-    }, [userData, activeSignature]);
+    }, [userData, activeSignature, userPlan, planType]);
 
     const [signatureInfo, setSignatureInfo] = useState({
         plan: "",
@@ -129,7 +131,7 @@ export default function MySignature() {
                     alt="mySignatureBackgroundImg"
                 />
                 {activeSignature && !loading ? (
-                    <SignatureDetails userPlan={userPlan} />
+                    <SignatureDetails userPlan={userPlan} planType={planType} />
                 ) : null}
                 {!activeSignature && !next ? (
                     <FirstStepSignPlan

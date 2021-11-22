@@ -12,6 +12,7 @@ export function UserProvider({ children }) {
     const [userData, setUserData] = useState({});
     const [activeSignature, setActiveSignature] = useState(false);
     const [userPlan, setUserPlan] = useState({});
+    const [planType, setPlanType] = useState(null);
 
     const localSavedUser = getUserFromLocalStorage();
 
@@ -53,6 +54,8 @@ export function UserProvider({ children }) {
                 userPlan,
                 setUserPlan,
                 logOut,
+                planType,
+                setPlanType,
             }}
         >
             {children}
