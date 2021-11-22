@@ -49,7 +49,7 @@ export default function MySignature() {
                     console.error("Fail to get user plan");
                 });
         }
-    }, [userData, activeSignature]);
+    }, [userData, activeSignature, userPlan]);
 
     const [signatureInfo, setSignatureInfo] = useState({
         plan: "",
@@ -106,7 +106,14 @@ export default function MySignature() {
                 },
                 userData.token
             )
-                .then(() => setActiveSignature(true))
+                .then(() => {
+                    setUserPlan({
+                        userId: userData.user.id,
+                        ...signatureInfo,
+                        ...addressInfo,
+                    });
+                    setActiveSignature(true);
+                })
                 .catch(() => console.error("Fail to sign plan"));
         }
     }

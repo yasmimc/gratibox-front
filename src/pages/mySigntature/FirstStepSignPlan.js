@@ -22,7 +22,7 @@ export default function FirstStepSignPlan({
     const { validateToken } = useContext(UserContext);
 
     useEffect(() => {
-        if (!userData.user) {
+        if (!userData?.user) {
             (async function () {
                 const authenticate = await validateToken();
                 if (!authenticate) navigate(routes.login);
@@ -31,7 +31,7 @@ export default function FirstStepSignPlan({
     }, [userData]);
 
     useEffect(() => {
-        if (userData.token) {
+        if (userData?.token) {
             API.getPlans(userData.token)
                 .then((resp) => setPlans(resp.data))
                 .catch(() => {

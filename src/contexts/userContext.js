@@ -38,6 +38,8 @@ export function UserProvider({ children }) {
     function logOut() {
         clearLocalStorage();
         setUserData(null);
+        setActiveSignature(false);
+        setUserPlan({});
     }
 
     return (
