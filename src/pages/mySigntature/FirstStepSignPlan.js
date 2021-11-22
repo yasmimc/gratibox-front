@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import UserContext from "../../contexts/userContext";
@@ -75,6 +76,7 @@ export default function FirstStepSignPlan({
             </select>
             <input
                 type={type}
+                min={dayjs().format("YYYY-MM-DD")}
                 placeholder="Entrega"
                 onFocus={() => setType("date")}
                 onBlur={() => {
