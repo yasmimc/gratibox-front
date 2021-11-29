@@ -1,8 +1,8 @@
 import Greetings from "../../components/Greetings";
-import mySignatureBackGroundImg from "../../assets/images/image03.jpg";
+import mySubscriptionBackGroundImg from "../../assets/images/image03.jpg";
 import {
     PageContainer,
-    MySignatureDetails,
+    MySubscriptionDetails,
     RateButton,
     NextPageButton,
 } from "./styles";
@@ -11,19 +11,19 @@ import { useNavigate } from "react-router";
 import { useContext } from "react";
 import UserContext from "../../contexts/userContext";
 import routes from "../../routes/routes";
-import SignatureDetails from "./SignatureDetails";
+import SubscriptionDetails from "./SubscriptionDetails";
 import FirstStepSignPlan from "./FirstStepSignPlan";
 import SecondStepSignPlan from "./SecondStepSignPlan";
 import API from "../../services/API/requests";
 
-export default function MySignature() {
+export default function MySubscription() {
     const navigate = useNavigate();
 
     const {
         validateToken,
         userData,
-        activeSignature,
-        setActiveSignature,
+        activeSubscription,
+        setActiveSubscription,
         userPlan,
         setUserPlan,
         planType,
@@ -38,13 +38,13 @@ export default function MySignature() {
                 const authenticate = await validateToken();
                 if (!authenticate) navigate(routes.login);
             })();
-        } else if (!activeSignature) {
+        } else if (!activeSubscription) {
             setLoading(true);
             API.getUserPlan(userData.token)
                 .then((resp) => {
                     setUserPlan(resp.data);
                     setPlanType(resp.data.planName);
-                    setActiveSignature(true);
+                    setActiveSubscription(true);
                     setLoading(false);
                 })
                 .catch(() => {
@@ -52,9 +52,9 @@ export default function MySignature() {
                     console.error("Fail to get user plan");
                 });
         }
-    }, [userData, activeSignature, userPlan, planType]);
+    }, [userData, activeSubscription, userPlan, planType]);
 
-    const [signatureInfo, setSignatureInfo] = useState({
+    const [subscriptionInfo, setSubscriptionInfo] = useState({
         plan: "",
         startDate: "",
         products: [],
@@ -62,14 +62,14 @@ export default function MySignature() {
 
     function updateProducts(event) {
         if (event.target.checked) {
-            setSignatureInfo({
-                ...signatureInfo,
-                products: [...signatureInfo.products, event.target.value],
+            setSubscriptionInfo({
+                ...subscriptionInfo,
+                products: [...subscriptionInfo.products, event.target.value],
             });
         } else
-            setSignatureInfo({
-                ...signatureInfo,
-                products: signatureInfo.products.filter(
+            setSubscriptionInfo({
+                ...subscriptionInfo,
+                products: subscriptionInfo.products.filter(
                     (product) => product !== event.target.value
                 ),
             });
@@ -77,13 +77,13 @@ export default function MySignature() {
 
     const [next, setNext] = useState(false);
 
-    const [signatureInputError, setSignatureInputError] = useState(false);
+    const [subscriptionInputError, setSubscriptionInputError] = useState(false);
 
     function nextPage() {
-        const emptyFields = Object.values(signatureInfo).some(
+        const emptyFields = Object.values(subscriptionInfo).some(
             (key) => key === ""
         );
-        if (emptyFields) setSignatureInputError(true);
+        if (emptyFields) setSubscriptionInputError(true);
         else setNext(true);
     }
 
@@ -99,12 +99,12 @@ export default function MySignature() {
         const emptyFields = Object.values(addressInfo).some(
             (key) => key === ""
         );
-        if (emptyFields) setSignatureInputError(true);
+        if (emptyFields) setSubscriptionInputError(true);
         else {
             API.signPlan(
                 {
                     userId: userData.user.id,
-                    ...signatureInfo,
+                    ...subscriptionInfo,
                     ...addressInfo,
                 },
                 userData.token
@@ -112,10 +112,10 @@ export default function MySignature() {
                 .then(() => {
                     setUserPlan({
                         userId: userData.user.id,
-                        ...signatureInfo,
+                        ...subscriptionInfo,
                         ...addressInfo,
                     });
-                    setActiveSignature(true);
+                    setActiveSubscription(true);
                 })
                 .catch(() => console.error("Fail to sign plan"));
         }
@@ -125,45 +125,48 @@ export default function MySignature() {
         <PageContainer>
             <Greetings name={userData?.user?.name} />
             <h3>“Agradecer é arte de atrair coisas boas”</h3>
-            <MySignatureDetails>
+            <MySubscriptionDetails>
                 <img
-                    src={mySignatureBackGroundImg}
-                    alt="mySignatureBackgroundImg"
+                    src={mySubscriptionBackGroundImg}
+                    alt="mySubscriptionBackgroundImg"
                 />
-                {activeSignature && !loading ? (
-                    <SignatureDetails userPlan={userPlan} planType={planType} />
-                ) : null}
-                {!activeSignature && !next ? (
-                    <FirstStepSignPlan
-                        userData={userData}
-                        setSignatureInfo={setSignatureInfo}
-                        signatureInfo={signatureInfo}
-                        setSignatureInputError={setSignatureInputError}
-                        updateProducts={updateProducts}
-                        signatureInputError={signatureInputError}
+                {activeSubscription && !loading ? (
+                    <SubscriptionDetails
+                        userPlan={userPlan}
+                        planType={planType}
                     />
                 ) : null}
-                {!activeSignature && next ? (
+                {!activeSubscription && !next ? (
+                    <FirstStepSignPlan
+                        userData={userData}
+                        setSubscriptionInfo={setSubscriptionInfo}
+                        subscriptionInfo={subscriptionInfo}
+                        setSubscriptionInputError={setSubscriptionInputError}
+                        updateProducts={updateProducts}
+                        subscriptionInputError={subscriptionInputError}
+                    />
+                ) : null}
+                {!activeSubscription && next ? (
                     <SecondStepSignPlan
                         userData={userData}
                         setAddressInfo={setAddressInfo}
                         addressInfo={addressInfo}
-                        setSignatureInputError={setSignatureInputError}
-                        signatureInputError={signatureInputError}
+                        setSubscriptionInputError={setSubscriptionInputError}
+                        subscriptionInputError={subscriptionInputError}
                     />
                 ) : null}
-            </MySignatureDetails>
-            {activeSignature ? (
+            </MySubscriptionDetails>
+            {activeSubscription ? (
                 <RateButton children="Avaliar entregas" />
             ) : null}
-            {!activeSignature && !next ? (
+            {!activeSubscription && !next ? (
                 <NextPageButton
                     type="submit"
                     children="Próximo"
                     onClick={nextPage}
                 />
             ) : null}
-            {!activeSignature && next ? (
+            {!activeSubscription && next ? (
                 <NextPageButton
                     type="submit"
                     children="Finalizar"

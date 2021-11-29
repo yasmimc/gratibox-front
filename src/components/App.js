@@ -6,7 +6,7 @@ import routes from "../routes/routes";
 import Login from "../pages/login/Login";
 import Register from "../pages/register/Register";
 import Home from "../pages/home/Home";
-import MySignature from "../pages/mySigntature/MySignature";
+import MySubscription from "../pages/mySubscription/MySubscription";
 import Plans from "../pages/plans/Plans";
 import { UserProvider } from "../contexts/userContext";
 
@@ -25,8 +25,8 @@ function App() {
                     <Route exact path={routes.plans} element={<Plans />} />
                     <Route
                         exact
-                        path={routes.mySignature}
-                        element={<MySignature />}
+                        path={routes.mySubscription}
+                        element={<MySubscription />}
                     />
                 </Routes>
             </UserProvider>

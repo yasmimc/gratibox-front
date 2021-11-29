@@ -8,11 +8,11 @@ import { SignPlan, SignProducts } from "./styles";
 
 export default function FirstStepSignPlan({
     userData,
-    setSignatureInfo,
-    signatureInfo,
-    setSignatureInputError,
+    setSubscriptionInfo,
+    subscriptionInfo,
+    setSubscriptionInputError,
     updateProducts,
-    signatureInputError,
+    subscriptionInputError,
 }) {
     const [plans, setPlans] = useState([]);
     const [products, setProducts] = useState([]);
@@ -51,8 +51,8 @@ export default function FirstStepSignPlan({
                 name="plans"
                 id="plans"
                 onChange={(event) => {
-                    setSignatureInfo({
-                        ...signatureInfo,
+                    setSubscriptionInfo({
+                        ...subscriptionInfo,
                         plan: event.target.value,
                     });
                     setPlanType(
@@ -60,7 +60,7 @@ export default function FirstStepSignPlan({
                             event.target.options.selectedIndex
                         ].getAttribute("name")
                     );
-                    setSignatureInputError(false);
+                    setSubscriptionInputError(false);
                 }}
             >
                 <option value="" disabled selected>
@@ -82,17 +82,17 @@ export default function FirstStepSignPlan({
                 name="deliveryDate"
                 id="deliveryDate"
                 onChange={(event) => {
-                    setSignatureInfo({
-                        ...signatureInfo,
+                    setSubscriptionInfo({
+                        ...subscriptionInfo,
                         startDate: event.target.value,
                     });
-                    setSignatureInputError(false);
+                    setSubscriptionInputError(false);
                 }}
             >
                 <option value="" disabled selected>
                     Entrega
                 </option>
-                {!signatureInfo.plan ? (
+                {!subscriptionInfo.plan ? (
                     <option key="0" value="" disabled>
                         Escolha um plano primeiro
                     </option>
@@ -194,7 +194,7 @@ export default function FirstStepSignPlan({
                                   type="checkbox"
                                   value={product.id}
                                   onChange={(event) => {
-                                      setSignatureInputError(false);
+                                      setSubscriptionInputError(false);
                                       updateProducts(event);
                                   }}
                               />
@@ -205,7 +205,7 @@ export default function FirstStepSignPlan({
                       ))
                     : null}
             </SignProducts>
-            {signatureInputError ? <p>Selecione todos os campos</p> : null}
+            {subscriptionInputError ? <p>Selecione todos os campos</p> : null}
         </SignPlan>
     );
 }

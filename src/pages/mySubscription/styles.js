@@ -14,7 +14,7 @@ const PageContainer = styled(Container)`
     }
 `;
 
-const MySignatureDetails = styled.div`
+const MySubscriptionDetails = styled.div`
     background: #ffffff;
     border-radius: 10px;
     width: 356px;
@@ -140,7 +140,7 @@ const Address = styled.div`
 
 export {
     PageContainer,
-    MySignatureDetails,
+    MySubscriptionDetails,
     RateButton,
     NextPageButton,
     Deliveries,

@@ -3,8 +3,8 @@ import { Address, SignPlan } from "./styles";
 export default function SecondStepSignPlan({
     setAddressInfo,
     addressInfo,
-    setSignatureInputError,
-    signatureInputError,
+    setSubscriptionInputError,
+    subscriptionInputError,
 }) {
     return (
         <SignPlan>
@@ -16,7 +16,7 @@ export default function SecondStepSignPlan({
                         ...addressInfo,
                         userFullName: event.target.value,
                     });
-                    setSignatureInputError(false);
+                    setSubscriptionInputError(false);
                 }}
             />
             <input
@@ -27,7 +27,7 @@ export default function SecondStepSignPlan({
                         ...addressInfo,
                         deliveryAddress: event.target.value,
                     });
-                    setSignatureInputError(false);
+                    setSubscriptionInputError(false);
                 }}
             />
             <input
@@ -38,7 +38,7 @@ export default function SecondStepSignPlan({
                         ...addressInfo,
                         cep: event.target.value.replace("-", ""),
                     });
-                    setSignatureInputError(false);
+                    setSubscriptionInputError(false);
                 }}
             />
             <Address>
@@ -50,7 +50,7 @@ export default function SecondStepSignPlan({
                             ...addressInfo,
                             city: event.target.value,
                         });
-                        setSignatureInputError(false);
+                        setSubscriptionInputError(false);
                     }}
                 />
                 <select
@@ -61,7 +61,7 @@ export default function SecondStepSignPlan({
                             ...addressInfo,
                             state: event.target.value,
                         });
-                        setSignatureInputError(false);
+                        setSubscriptionInputError(false);
                     }}
                 >
                     <option value="" disabled selected>
@@ -71,7 +71,9 @@ export default function SecondStepSignPlan({
                     <option value="SP">SP</option>
                     <option value="RJ">RJ</option>
                 </select>
-                {signatureInputError ? <p>Selecione todos os campos</p> : null}
+                {subscriptionInputError ? (
+                    <p>Selecione todos os campos</p>
+                ) : null}
             </Address>
         </SignPlan>
     );
