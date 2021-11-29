@@ -47,14 +47,17 @@ function getProducts(token) {
 
 function signPlan(plan, token) {
     return axiosBase.post(
-        "/signature",
+        "/subscription",
         plan,
         createBearerTokenAuthorization(token)
     );
 }
 
 function getUserPlan(token) {
-    return axiosBase.get("/signature", createBearerTokenAuthorization(token));
+    return axiosBase.get(
+        "/subscription",
+        createBearerTokenAuthorization(token)
+    );
 }
 
 export default API;
