@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { Deliveries, Products } from "./styles";
 
-export default function SignatureDetails({ userPlan, planType }) {
+export default function SubscriptionDetails({ userPlan, planType }) {
     function businessDay(date) {
         if (dayjs(date).day() === 6)
             return dayjs(dayjs(date).add(2, "days").format());

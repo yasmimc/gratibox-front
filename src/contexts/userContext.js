@@ -10,7 +10,7 @@ const UserContext = createContext({});
 
 export function UserProvider({ children }) {
     const [userData, setUserData] = useState({});
-    const [activeSignature, setActiveSignature] = useState(false);
+    const [activeSubscription, setActiveSubscription] = useState(false);
     const [userPlan, setUserPlan] = useState({});
     const [planType, setPlanType] = useState(null);
 
@@ -39,7 +39,7 @@ export function UserProvider({ children }) {
     function logOut() {
         clearLocalStorage();
         setUserData(null);
-        setActiveSignature(false);
+        setActiveSubscription(false);
         setUserPlan({});
     }
 
@@ -49,8 +49,8 @@ export function UserProvider({ children }) {
                 userData,
                 persistLogin,
                 validateToken,
-                activeSignature,
-                setActiveSignature,
+                activeSubscription,
+                setActiveSubscription,
                 userPlan,
                 setUserPlan,
                 logOut,

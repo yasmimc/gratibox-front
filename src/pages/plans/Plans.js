@@ -13,8 +13,8 @@ export default function Plans() {
     const {
         validateToken,
         userData,
-        activeSignature,
-        setActiveSignature,
+        activeSubscription,
+        setActiveSubscription,
         setUserPlan,
     } = useContext(UserContext);
     const navigate = useNavigate();
@@ -31,17 +31,17 @@ export default function Plans() {
             setLoading(true);
             API.getUserPlan(userData.token)
                 .then((resp) => {
-                    setActiveSignature(true);
+                    setActiveSubscription(true);
                     setUserPlan(resp.data);
                     setLoading(false);
-                    navigate(routes.mySignature);
+                    navigate(routes.mySubscription);
                 })
                 .catch(() => {
                     setLoading(false);
                     console.error("Fail to get user plan");
                 });
         }
-    }, [userData, activeSignature]);
+    }, [userData, activeSubscription]);
 
     return (
         <PageContainer>
@@ -59,7 +59,7 @@ export default function Plans() {
                 <Button
                     disabled={loading}
                     children="Assinar"
-                    onClick={() => navigate(routes.mySignature)}
+                    onClick={() => navigate(routes.mySubscription)}
                 />
             </SignPlan>
         </PageContainer>
